@@ -1,8 +1,6 @@
 >
 
-Let's have a look at some of the basics of a TLS handshake. TLS has various options and extensions (e.g, the requirement for the Client to issue a certificate and so on).
-
-Rather than going into the various extensions and options, I wanted to outline the basic details (i.e., the minimum flow) for the majority of TLS connections.
+Let's have a look at some of the basics of a TLS handshake. TLS has various options and extensions (e.g, the requirement for the Client to issue a certificate and so on). Rather than going into the various extensions and options, I wanted to outline the basic details (i.e., the minimum flow) for the majority of TLS connections.
 
 Of course, if you are looking for the full RFC head over to [TLS RFC5246](https://tools.ietf.org/html/rfc5246).
 
@@ -46,7 +44,7 @@ Having completed the hello messages, the server will send its certificate for th
 
 The Client Key exchange message is *typically* the first message sent by the Client after the Server's hello message is completed. The contents of this message will slightly differ depending on the method of key exchange being used.
 
-The method of key exchange is defined by the selected cipher-suite (cipher-suite will be a separate post). This message is all about the *pre-master secret*.
+The method of key exchange is defined by the selected cipher-suite (cipher-suite will be a separate post). The Key Exchange is either RSA or Diffie-Hellman. This message is all about the *pre-master secret*.
 
 The server can also send a server key exchange message (it actually takes place before the Client Key Exchange), but this is only sent if the certificate does not contain enough information for the client. Usually this is for cases when ephemeral key exchange is being implemented.
 
