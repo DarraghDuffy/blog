@@ -50,7 +50,7 @@ The method of key exchange is defined by the selected cipher-suite (cipher-suite
 
 The server can also send a server key exchange message (it actually takes place before the Client Key Exchange), but this is only sent if the certificate does not contain enough information for the client. Usually this is for cases when ephemeral key exchange is being implemented.
 
-> DH, RSA and Ephemeral
+> Key Exchange - DH, RSA and Ephemeral (Forward secrecy)
 
 In the DH key exchange process, the actual *pre-master* secret is **not** sent, and so, this is an advantage! While in RSA Key Exchange the *pre-master* secret is issued directly (this approach has more Risk associated with it), in this case, the Client creates a pre-master secret and encrypts with the Server's public key.
 
