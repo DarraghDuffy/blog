@@ -1,8 +1,8 @@
 >
 
-Let's have a look at the basics of a TLS handshake. This will look at the basic representation of the TLS handshake. TLS has various options and extensions (e.g, the requirement for the Client to issue a certificate and so on).
+Let's have a look at some of the basics of a TLS handshake. TLS has various options and extensions (e.g, the requirement for the Client to issue a certificate and so on).
 
-Instead of going into the extensions and those various options, I wanted to outline the basic details (i.e., the minimum flow) for the majority of TLS connections.
+Rather than going into the various extensions and options, I wanted to outline the basic details (i.e., the minimum flow) for the majority of TLS connections.
 
 Of course, if you are looking for the full RFC head over to [TLS RFC5246](https://tools.ietf.org/html/rfc5246).
 
@@ -12,7 +12,7 @@ The TLS handshake's objective is to *securely* agree on the highest mutually acc
 
 In this post I am not going to be explaining the cipher-suites, that will be a separate post.
 
-First, I will provide a summary of the handshake, and then, I will list the major differences between TLS 1.2 and 1.3.
+First, I will provide a summary of the handshake, and go through the main message exchanges, and then, I will list the major differences between TLS 1.2 and 1.3.
 
 > Summary Handshake
 
@@ -36,11 +36,11 @@ The SessionID attribute is used in cases where an abbreviated handshake takes pl
 
 > Selected Cipher-suite
 
-In order for the server to send its hello, the server will have selected an agreed cipher-suite. The Client will have provided a list of the cipher-suites that it supports. The Server will have been configured with a *prioritized* list of ciphers. The Server will select the highest mutually accepted cipher. If an agreed cipher-suite could not be found a error is returned at this point.
+In order for the server to send its hello, the server will have selected an agreed cipher-suite. The Client will have provided a list of the cipher-suites that it supports. The Server will have been configured with a *prioritized* list of ciphers. The Server will select the highest mutually accepted cipher. If an agreed cipher-suite could not be found an error is returned at this point.
 
 > Servers Certificate & Verify Certificate
 
-Having completed the hello messages, the server will send its certificate for the client to verify its authenticity (the client can also send a certificate, but this is not included above). The server's certificate must be appropriate for the key exchange algorithm. The certificate message is required to include the certificate chain (list). The server's certificate must be first, and each subsequent certificate must *directly certify* the previous certificate. The root certificate does not need to be included, because the client should already have the root certificate installed. The root certificates will have been distributed independently e.g. with your Windows or Apple Mac OSs'.
+Having completed the hello messages, the server will send its certificate for the client to verify its authenticity (the client can also send a certificate, but this is not included above). The server's certificate must be appropriate for the key exchange algorithm. The certificate message is required to include the certificate chain (i.e., a list). The Server's certificate must be first, and each subsequent certificate must *directly certify* the previous certificate. The root certificate does not need to be included, because the client should already have the root certificate installed. The root certificates will have been distributed independently e.g. with your Windows or Apple Mac OSs'.
 
 > Key Exchange
 
@@ -52,7 +52,7 @@ The server can also send a server key exchange message (it actually takes place 
 
 > DH, RSA and Ephemeral
 
-In the DH key exchange process, the actual *pre-master* secret is **not** sent, so, this is an advantage! While in RSA Key Exchange the *pre-master* secret is issued directly (this approach has more Risk associated with it), in this case, the Client creates a pre-master secret and encrypts with the Server's public key.
+In the DH key exchange process, the actual *pre-master* secret is **not** sent, and so, this is an advantage! While in RSA Key Exchange the *pre-master* secret is issued directly (this approach has more Risk associated with it), in this case, the Client creates a pre-master secret and encrypts with the Server's public key.
 
 DH requires the public exponents to be exchanged, in cases where static exponents are used (i.e., non ephemeral), the Server's certificate will contain the Server's DH public exponent. While the Client's public exponent will be sent with the Client's Key Exchange.
 
